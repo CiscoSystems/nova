@@ -4423,7 +4423,8 @@ class ComputeTestCase(BaseTestCase):
         # creating mocks
         self.mox.StubOutWithMock(self.compute.driver, 'pre_live_migration')
         self.compute.driver.pre_live_migration(mox.IsA(c), mox.IsA(instance),
-                                               {'block_device_mapping': []},
+                                               {'swap': None, 'ephemerals': [],
+                                                'block_device_mapping': []},
                                                mox.IgnoreArg(),
                                                mox.IgnoreArg(),
                                                mox.IgnoreArg())
@@ -4644,7 +4645,8 @@ class ComputeTestCase(BaseTestCase):
             self.compute._post_live_migration(c, inst_ref, dest)
 
             post_live_migration.assert_has_calls([
-                mock.call(c, inst_ref, {'block_device_mapping': []})])
+                mock.call(c, inst_ref, {'swap': None, 'ephemerals': [],
+                                        'block_device_mapping': []})])
             unfilter_instance.assert_has_calls([mock.call(inst_ref, [])])
             migration = {'source_compute': srchost,
                          'dest_compute': dest, }
