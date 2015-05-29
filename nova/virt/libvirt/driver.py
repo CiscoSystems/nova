@@ -3881,7 +3881,8 @@ class LibvirtDriver(driver.ComputeDriver):
 
     def check_instance_shared_storage_local(self, context, instance):
         dirpath = libvirt_utils.get_instance_path(instance)
-
+        if CONF.libvirt_images_type == 'rbd':
+            return None
         if not os.path.exists(dirpath):
             return None
 
